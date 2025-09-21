@@ -1,425 +1,6 @@
 {
-  "name": "1% Club",
+  "name": "workflow",
   "nodes": [
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        416,
-        0
-      ],
-      "id": "d8902263-99d5-491e-9ee8-64e9e365d028",
-      "name": "Limit"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "2c02ab5f-31b5-4b0c-92f6-cefb4767b768",
-              "name": "File Name",
-              "value": "={{ Array.from({ length: 10 }, () => Math.random().toString(36)[2]).join('') }}",
-              "type": "string"
-            },
-            {
-              "id": "5c37b137-50a4-4483-ae79-a0dd0bf1be87",
-              "name": "Folder Name",
-              "value": "footage",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        624,
-        0
-      ],
-      "id": "d6cae43a-d026-444a-894b-9044897da7da",
-      "name": "Generate File Name"
-    },
-    {
-      "parameters": {
-        "url": "={{ $('Get Youtube Video').item.json.Video }}",
-        "sendHeaders": true,
-        "specifyHeaders": "json",
-        "jsonHeaders": "{\n  \"User-Agent\": \"Mozilla/5.0\",\n  \"Referer\": \"https://imgur.com\"\n}",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "file"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        832,
-        0
-      ],
-      "id": "d298385e-9339-494e-a15a-c1cb94b430a9",
-      "name": "HTTP Request",
-      "executeOnce": false,
-      "retryOnFail": false,
-      "alwaysOutputData": false
-    },
-    {
-      "parameters": {
-        "operation": "write",
-        "fileName": "=./{{ $json['Folder Name'] }}/{{ $json['File Name'] }}.mp4",
-        "options": {
-          "append": false
-        }
-      },
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        1040,
-        0
-      ],
-      "id": "a9aace6c-3bc1-44aa-8967-5bec82992ee2",
-      "name": "Read/Write Files from Disk"
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "documentId": {
-          "__rl": true,
-          "value": "186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM",
-          "mode": "list",
-          "cachedResultName": "the1%",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1399753190,
-          "mode": "list",
-          "cachedResultName": "Imgur",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit#gid=1399753190"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "row_number": "={{ $('Get Youtube Video').item.json.row_number }}",
-            "Video": "={{ $('Get Youtube Video').item.json.Video }}",
-            "Done": "OK",
-            "Link": "={{ $json.fileName }}"
-          },
-          "matchingColumns": [
-            "row_number"
-          ],
-          "schema": [
-            {
-              "id": "Video",
-              "displayName": "Video",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "Link",
-              "displayName": "Link",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "Done",
-              "displayName": "Done",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "row_number",
-              "displayName": "row_number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "readOnly": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        1248,
-        0
-      ],
-      "id": "68ddbdf0-dc5f-4a56-bd7d-4b30cc7f250e",
-      "name": "Update row in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "el1Qg4NlEH68WdEo",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        416,
-        176
-      ],
-      "id": "f11475d5-17b8-4e64-a3d1-b3904263e677",
-      "name": "Limit1"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "2c02ab5f-31b5-4b0c-92f6-cefb4767b768",
-              "name": "File Name",
-              "value": "={{ Array.from({ length: 10 }, () => Math.random().toString(36)[2]).join('') }}",
-              "type": "string"
-            },
-            {
-              "id": "5c37b137-50a4-4483-ae79-a0dd0bf1be87",
-              "name": "Folder Name",
-              "value": "footage",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        624,
-        176
-      ],
-      "id": "4f59bde4-2716-4b1c-a0a2-f13c943df46e",
-      "name": "Generate File Name1"
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM",
-          "mode": "list",
-          "cachedResultName": "the1%",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1399753190,
-          "mode": "list",
-          "cachedResultName": "Imgur",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit#gid=1399753190"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Done"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        208,
-        0
-      ],
-      "id": "da2012c1-cc12-4a99-9a1e-0430f46213c1",
-      "name": "Get Youtube Video",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "el1Qg4NlEH68WdEo",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM",
-          "mode": "list",
-          "cachedResultName": "the1%",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1368130712,
-          "mode": "list",
-          "cachedResultName": "Music",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit#gid=1368130712"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "Done"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        208,
-        176
-      ],
-      "id": "b196dd08-4359-427e-8361-87bbf755c489",
-      "name": "Get Youtube Music",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "el1Qg4NlEH68WdEo",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "command": "=yt-dlp -x --audio-format mp3 -q --no-progress --no-overwrites --ignore-errors -o \"./{{ $json['Folder Name'] }}/{{ $json['File Name'] }}.mp3\" \"{{ $('Get Youtube Music').item.json.Music }}\""
-      },
-      "type": "n8n-nodes-base.executeCommand",
-      "typeVersion": 1,
-      "position": [
-        832,
-        176
-      ],
-      "id": "669ff050-84ed-4385-ba24-40d27bb2001e",
-      "name": "Execute Command",
-      "executeOnce": false
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "documentId": {
-          "__rl": true,
-          "value": "186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM",
-          "mode": "list",
-          "cachedResultName": "the1%",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": 1368130712,
-          "mode": "list",
-          "cachedResultName": "Music",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/186xNK_ToihwIPsxSs7GGeUgJnhygWs4xR9W_9glfPxM/edit#gid=1368130712"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "row_number": "={{ $('Get Youtube Music').item.json.row_number }}",
-            "Music": "={{ $('Get Youtube Music').item.json.Music }}",
-            "Link": "=./{{ $('Generate File Name1').item.json['Folder Name'] }}/{{ $('Generate File Name1').item.json['File Name'] }}",
-            "Done": "OK"
-          },
-          "matchingColumns": [
-            "row_number"
-          ],
-          "schema": [
-            {
-              "id": "Music",
-              "displayName": "Music",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "Link",
-              "displayName": "Link",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "Done",
-              "displayName": "Done",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "row_number",
-              "displayName": "row_number",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "number",
-              "canBeUsedToMatch": true,
-              "readOnly": true,
-              "removed": false
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.6,
-      "position": [
-        1040,
-        176
-      ],
-      "id": "9f4e7e4a-734a-4426-a22b-e0f9560cb5b9",
-      "name": "Update row in sheet1",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "el1Qg4NlEH68WdEo",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## Download Videos and Musics",
-        "height": 496,
-        "width": 1552
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -64,
-        -80
-      ],
-      "typeVersion": 1,
-      "id": "dc340849-5862-4510-8d91-1cf0c79be679",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        32,
-        576
-      ],
-      "id": "e2a1360f-d60b-43da-ad1a-3535fddcfa46",
-      "name": "When clicking ‘Execute workflow’"
-    },
     {
       "parameters": {
         "documentId": {
@@ -449,10 +30,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        240,
-        576
+        304,
+        656
       ],
-      "id": "7f506f30-9fa5-4a6d-a11d-7c6cc6378029",
+      "id": "e7a09e91-6441-44c9-80dd-3b90a18fda85",
       "name": "Get All Videos",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -490,10 +71,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        656,
-        576
+        720,
+        656
       ],
-      "id": "63177cdb-0648-46e1-b387-22b9e8966ee6",
+      "id": "5ebbf113-20bd-43f6-a32e-d4c7fbfdb6ee",
       "name": "Get All Musics",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -530,10 +111,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1072,
-        576
+        1136,
+        656
       ],
-      "id": "e257adc2-bd50-4039-8bc3-72852b7c61e9",
+      "id": "de86a50d-a6c1-4225-b470-c9cbadbbb71c",
       "name": "Get Quotes",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -547,10 +128,10 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        1280,
-        576
+        1344,
+        656
       ],
-      "id": "0417b936-f6aa-4e83-b04e-b34a5fa7450b",
+      "id": "d47ea247-9c3a-41da-81f1-0d879cfaa5aa",
       "name": "Limit2"
     },
     {
@@ -577,10 +158,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        240,
-        784
+        304,
+        864
       ],
-      "id": "04afbd4b-0127-4551-8ef0-2066d072bce2",
+      "id": "13c0c437-1ae8-413a-a4e8-7264e2aa9f71",
       "name": "Pick Video and Music in Random"
     },
     {
@@ -597,10 +178,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        448,
-        576
+        512,
+        656
       ],
-      "id": "30450665-ea97-4590-b84e-de5c5e613a0b",
+      "id": "5f50b486-2670-4746-a95c-5ecf38b26b18",
       "name": "Aggregate Video"
     },
     {
@@ -617,10 +198,10 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        864,
-        576
+        928,
+        656
       ],
-      "id": "8b936c9b-fc15-4705-b659-1986a4bd772e",
+      "id": "32d1c048-0dbf-41ee-8918-f6137c123090",
       "name": "Aggregate Music"
     },
     {
@@ -646,10 +227,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        448,
-        784
+        512,
+        864
       ],
-      "id": "521e36f3-6634-4181-a110-2a04a98194cb",
+      "id": "77bc7d85-bb4e-429b-adf3-73abba91723d",
       "name": "Generate File Name2"
     },
     {
@@ -659,10 +240,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        656,
-        784
+        720,
+        864
       ],
-      "id": "d918268e-60b3-4a7a-9d2b-6183ac298af7",
+      "id": "0b023827-3453-4927-82e1-f63c158cfbf7",
       "name": "Generate Text Overlay For Video"
     },
     {
@@ -673,10 +254,10 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        864,
-        784
+        928,
+        864
       ],
-      "id": "7fc95c63-680c-4824-96e6-d141259fd354",
+      "id": "195fc46b-0114-4059-83d2-3b57a4e1688e",
       "name": "Generate Video"
     },
     {
@@ -687,10 +268,10 @@
       "type": "n8n-nodes-base.readWriteFile",
       "typeVersion": 1,
       "position": [
-        1280,
-        784
+        1344,
+        864
       ],
-      "id": "a07801f4-876b-4877-8e57-8569654ab0b3",
+      "id": "a1954333-08d6-4759-b6a8-37540e2d7820",
       "name": "Read/Write Files from Disk1",
       "alwaysOutputData": false
     },
@@ -728,10 +309,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1072,
-        784
+        1136,
+        864
       ],
-      "id": "38980321-ff0b-4808-b66b-1160f7b36422",
+      "id": "a16fc24e-bdb5-4456-ab3a-c51cd4bddf3c",
       "name": "Create Youtube Link",
       "credentials": {
         "youTubeOAuth2Api": {
@@ -763,10 +344,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        240,
-        992
+        304,
+        1072
       ],
-      "id": "3bea79f3-938f-4bf2-a234-a769ecbb163b",
+      "id": "008129ed-3945-41e5-ab12-bead9df872e2",
       "name": "Upload Video",
       "credentials": {
         "youTubeOAuth2Api": {
@@ -871,10 +452,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        432,
-        992
+        496,
+        1072
       ],
-      "id": "d14318bf-f3a5-485b-ba30-9860752f80ec",
+      "id": "458fc76d-c728-437f-9c53-efa4a36aaca2",
       "name": "Update Video Post",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -890,10 +471,10 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        624,
-        992
+        688,
+        1072
       ],
-      "id": "1e8eedf6-ca5c-4e49-ab0a-8911c060cca0",
+      "id": "de6e422a-2549-4b57-92e3-41732361b9b5",
       "name": "Remove File"
     },
     {
@@ -916,10 +497,10 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        1488,
-        784
+        1552,
+        864
       ],
-      "id": "be98d155-57ef-42e2-bbb0-3a69bfb0ed52",
+      "id": "feb51db6-45f6-41b7-b17d-04d3e89e0421",
       "name": "Upload file",
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -991,10 +572,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1664,
-        784
+        1728,
+        864
       ],
-      "id": "f962f053-67fd-4e33-9c2a-a87eac8b12bf",
+      "id": "5216d4bc-4709-4277-938e-84d5a0b904c6",
       "name": "Append row in sheet (Trigger Zapier and Buffer)",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -1006,116 +587,6 @@
   ],
   "pinData": {},
   "connections": {
-    "Limit": {
-      "main": [
-        [
-          {
-            "node": "Generate File Name",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate File Name": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Read/Write Files from Disk",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Read/Write Files from Disk": {
-      "main": [
-        [
-          {
-            "node": "Update row in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Limit1": {
-      "main": [
-        [
-          {
-            "node": "Generate File Name1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Generate File Name1": {
-      "main": [
-        [
-          {
-            "node": "Execute Command",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Youtube Video": {
-      "main": [
-        [
-          {
-            "node": "Limit",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get Youtube Music": {
-      "main": [
-        [
-          {
-            "node": "Limit1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Command": {
-      "main": [
-        [
-          {
-            "node": "Update row in sheet1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Get All Videos",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Get All Videos": {
       "main": [
         [
@@ -1291,11 +762,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "496cfe21-0607-47ae-b9da-e4c71e3f8861",
+  "versionId": "530b161f-5316-4066-89a7-996c519c4af7",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "1b56398f25f61d5d8dc16c17886a0160d4aa83cf310ff9036fbbc5da1d171746"
   },
-  "id": "M29avxV6pw9gQdI2",
+  "id": "HJiAhNkjf18QYbZb",
   "tags": []
 }
