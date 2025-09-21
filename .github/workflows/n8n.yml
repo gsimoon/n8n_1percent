@@ -13,16 +13,31 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Install n8n
-        run: npm install -g n8n
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install -g n8n
 
-      - name: Run Workflow with Secrets
+      - name: Prepare Secrets
         env:
           GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+        run: |
+          echo "$GOOGLE_SHEETS_CREDENTIALS" > service-account.json
+
+      - name: Run n8n Workflow
+        env:
+          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_ACCESS_TOKEN: ${{ secrets.YOUTUBE_ACCESS_TOKEN }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
         run: |
-          echo "$GOOGLE_SHEETS_CREDENTIALS" > service-account.json
+          # Ensure fonts and media files are available
+          # e.g., if fonts are in /fonts folder in repo
+          mkdir -p /tmp/fonts
+          cp -r ./fonts/* /tmp/fonts/
+          
+          # Run the workflow
           n8n execute --file workflow.json
